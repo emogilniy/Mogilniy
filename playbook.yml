@@ -7,6 +7,39 @@
     shell:
       cmd: apt update && apt install curl -y
  
-  - name: UFW activation
+  - name: UFW startup enabling
     shell:
-      cmd: systemctl enable ufw && systemctl start ufw
+      cmd: systemctl enable ufw
+
+  - name: UFW starting
+    shell:
+      cmd: systemctl start ufw
+
+  - name: UFW activation
+    ufw:
+      state: enabled
+
+  - name: Add UFW rules for port 80
+    ufw:
+      rule: allow
+      port: '80'
+
+  - name: Add UFW rules for port 8080
+    ufw:
+      rule: allow
+      port: '8080'
+
+  - name: Add UFW rules for port 1834
+    ufw:
+      rule: allow
+      port: '1834'
+  
+  - name: Delete old SSHD config
+    shell:
+      cmd: rm /etc/ssh/sshd_config
+
+  - name: Copy new SSHD config
+    copy:
+      src: source/sshd_config
+      dest: /etc/ssh/sshd_config
+
