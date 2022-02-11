@@ -90,9 +90,25 @@
     shell:
       cmd: systemctl restart sshd && systemctl restart ufw
 
+  - name: Changing SSH port
+    set_fact:
+        ansible_port: 1834
+
   - name: Rebooting VMs
     reboot:
 
+  - name: Going to build directory
+    shell:
+      cmd: cd /skillcloud-nginx
+
+  - name: Building Dockerfile-balance image
+    shell:
+      cmd: docker build -t balance:balance -f Dockerfile-balance .
+
+  - name: Building Dockerfile-site image
+    shell:
+      cmd: docker build -t site:site -f Dockerfile-site .
+
   - name: Building docker-compose file....
     shell:
-      cmd: docker-compose start
+      cmd: docker-compose up
