@@ -47,4 +47,50 @@
     shell:
       cmd: curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
 
-  - name: Installing Docker-compose
+  - name: Installing Docker-compose (script copying)
+    copy:
+      src: source/docker-compose.sh
+      dest: /root/docker-compose.sh
+
+  - name: Installing Docker-compose (script execution)
+    shell:
+      cmd: /bin/bash /root/docker-compose.sh
+
+  - name: Copying source files (mkdir)
+    shell:
+      cmd: mkdir /skillcloud-nginx
+
+  - name: Copying source files (transfer)
+    copy:
+      src: source/docker-compose.yml
+      dest: /skillcloud-nginx/docker-compose.yml
+
+
+  - name: Copying source files (transfer)
+    copy:
+      src: source/Dockerfile-balance
+      dest: /skillcloud-nginx/Docker-balance
+
+  - name: Copying source files (transfer)
+    copy:
+      src: source/Dockerfile-site
+      dest: /skillcloud-nginx/Docker-site
+
+  - name: Copying source files (transfer)
+    copy:
+      src: source/index.html
+      dest: /skillcloud-nginx/index.html
+
+  - name: Copying source files (transfer)
+    copy:
+      src: source/nginx.conf
+      dest: /skillcloud-nginx/nginx.conf
+
+  - name: Restarting SSH and UFW
+    shell:
+      cmd: systemctl restart sshd && systemctl restart ufw
+
+  - name: Rebooting VMs
+    reboot:
+
+  - name: Building docker-compose file....
