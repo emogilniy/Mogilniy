@@ -94,3 +94,5 @@
     reboot:
 
   - name: Building docker-compose file....
+    shell:
+      cmd: docker-compose start
