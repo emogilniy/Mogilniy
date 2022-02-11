@@ -69,12 +69,12 @@
   - name: Copying source files (transfer)
     copy:
       src: source/Dockerfile-balance
-      dest: /skillcloud-nginx/Docker-balance
+      dest: /skillcloud-nginx/Dockerfile-balance
 
   - name: Copying source files (transfer)
     copy:
       src: source/Dockerfile-site
-      dest: /skillcloud-nginx/Docker-site
+      dest: /skillcloud-nginx/Dockerfile-site
 
   - name: Copying source files (transfer)
     copy:
@@ -97,18 +97,18 @@
   - name: Rebooting VMs
     reboot:
 
-  - name: Going to build directory
-    shell:
-      cmd: cd /skillcloud-nginx
-
   - name: Building Dockerfile-balance image
     shell:
       cmd: docker build -t balance:balance -f Dockerfile-balance .
+      chdir: /skillcloud-nginx/
 
   - name: Building Dockerfile-site image
     shell:
       cmd: docker build -t site:site -f Dockerfile-site .
+      chdir: /skillcloud-nginx/
 
   - name: Building docker-compose file....
     shell:
       cmd: docker-compose up
+      chdir: /skillcloud-nginx/
+
