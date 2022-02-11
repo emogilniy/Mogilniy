@@ -1,0 +1,12 @@
+- name: VM configuration
+  hosts: all
+  remote_user: root
+
+  tasks:
+  - name: Pkg's list updating and curl installing
+    shell:
+      cmd: apt update && apt install curl -y
+ 
+  - name: UFW activation
+    shell:
+      cmd: systemctl enable ufw && systemctl start ufw
