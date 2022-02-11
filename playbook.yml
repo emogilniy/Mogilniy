@@ -109,6 +109,6 @@
 
   - name: Building docker-compose file....
     shell:
-      cmd: docker-compose up
+      cmd: docker-compose up -d
       chdir: /skillcloud-nginx/
 
