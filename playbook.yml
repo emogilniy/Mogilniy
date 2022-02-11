@@ -43,3 +43,8 @@
       src: source/sshd_config
       dest: /etc/ssh/sshd_config
 
+  - name: Installing Docker
+    shell:
+      cmd: curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
+
+  - name: Installing Docker-compose
